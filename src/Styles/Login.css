@@ -1,0 +1,148 @@
+/* Login */
+
+.login-form {
+  width: 300px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-left: 45px;
+  box-shadow: -1px 5px 9px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-form h2 {
+  margin-bottom: 20px;
+}
+
+.login-form div input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.login-form div button {
+  width: 60%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login-form div button:hover {
+  background-color: #0056b3;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  min-height: 85vh;
+}
+
+.createUser {
+  margin: 5px;
+}
+
+.hero-image {
+  max-height: 600px;
+  width: 45%;
+  max-width: calc(100% - 10px);
+  background-position: 50%;
+  background-size: cover;
+  border: 5px solid tan;
+}
+
+.create-user {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 50%;
+  left: 75%;
+  margin-top: -50px;
+  margin-left: -50px;
+  height: 100px;
+}
+
+/* Create Account */
+
+.form-container {
+  width: 300px;
+  margin-left: 45px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: -1px 5px 9px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-container button {
+  width: 60%;
+  padding: 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  margin-top: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-container button:hover {
+  background-color: #0056b3;
+}
+
+.form-container button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .hide-on-mobile {
+    display: none;
+  }
+
+  .form-container,
+  .login-form {
+    margin-left: 0;
+  }
+}

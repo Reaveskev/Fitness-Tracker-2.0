@@ -1,0 +1,52 @@
+/* Drop Box */
+
+.dropbox-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.fileInput {
+  display: none;
+}
+
+.dropboxForm {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.uploadLabel {
+  margin: 5px;
+  padding: 5px;
+  color: #fff;
+  padding: 5px;
+  background-color: #007bff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.uploadButton {
+  margin: 5px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.uploadButton:disabled {
+  background-color: #414040;
+  cursor: not-allowed;
+}
+
+.fileUrl {
+  font-size: 0.875rem;
+  word-break: break-all;
+  text-align: center;
+}
+
+.fileDiv {
+  display: flex;
+  align-items: center;
+}

@@ -1,0 +1,170 @@
+/* WorkoutJournal */
+
+.workout_journal_container {
+  flex: 50%;
+  background-color: #f0f0f0;
+  padding: 10px;
+}
+
+.button_div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button_div_mobile {
+  display: none;
+}
+
+.workout-div {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.icon {
+  cursor: pointer;
+  padding-right: 5px;
+}
+
+.add_icon {
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.successMessageWorkout {
+  color: green;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.failureMessageWorkout {
+  color: green;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.workout_journal_div {
+  width: 100%;
+  height: 500px;
+  border: 5px solid tan;
+  border-radius: 10px;
+  overflow-y: auto;
+}
+
+.workoutlist_div {
+  background-color: lightblue;
+  margin: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  height: 80px;
+}
+
+.workoutlist_img {
+  width: 60px;
+  height: 60px;
+  background: #ebeef0;
+  margin: 14px;
+}
+
+.expanded_workoutlist_div {
+  background-color: lightblue;
+  margin: 5px;
+  flex-direction: column;
+}
+
+.add_set_container {
+  display: flex;
+  align-items: center;
+  padding: 3px 0;
+}
+
+.workout_journal_header {
+  display: flex;
+  border-bottom: solid 1px;
+  border-top: solid 1px;
+  padding: 3px 0;
+}
+
+.addWorkoutButton {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 6px;
+}
+
+.weight_reps_input {
+  width: 10%;
+}
+
+.reps_label {
+  width: 10%;
+  padding-left: 10px;
+}
+
+.remove_span {
+  display: flex;
+  align-items: center;
+}
+
+.remove_span_mobile {
+  display: none;
+}
+
+.set_div {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .remove_span {
+    display: none;
+  }
+
+  .set_div {
+    justify-content: space-between;
+  }
+
+  .remove_span_mobile {
+    display: flex;
+    align-items: center;
+  }
+
+  .addWorkoutButton {
+    width: 60px;
+    font-size: 12px;
+  }
+
+  .reps_label {
+    padding-left: 37px;
+  }
+
+  .weight_reps_input {
+    width: 23%;
+  }
+  h1 {
+    font-size: 2em;
+  }
+
+  .workoutlist_img {
+    margin: 0 5px;
+  }
+
+  .button_div {
+    display: none;
+  }
+
+  .button_div_mobile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .date_input {
+    width: 98px;
+  }
+}
