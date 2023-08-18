@@ -1,4 +1,5 @@
 const express = require("express");
+const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -8,6 +9,7 @@ const bcrypt = require("bcrypt");
 const axios = require("axios");
 const saltRounds = 10;
 const multer = require("multer");
+const { match } = require("assert");
 const Dropbox = require("dropbox").Dropbox;
 
 // Goes through .env files and sets port and database.
@@ -16,6 +18,7 @@ const app = express();
 
 app.use(cors());
 
+const JWT_SECRET = process.env.JWT_SECRET || "yourSecretKey";
 app.use(express.static(path.join(__dirname, "build")));
 
 // Destructuring
@@ -44,6 +47,28 @@ async function hashPassword(password) {
   }
 }
 
+//////////////////////
+////////JWT///////////
+//////////////////////
+
+function verifyToken(req, res, next) {
+  const token = req.headers.authorization;
+
+  if (!token) {
+    return res.status(401).send({ error: "Token missing" });
+  }
+
+  jwt.verify(token, JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(401).send({ error: "Invalid token" });
+    }
+
+    // Attach the decoded user data to the request object for further use
+    req.user = decoded;
+    next();
+  });
+}
+
 //////////////////////////////
 ///////////USERS//////////////
 //////////////////////////////
@@ -58,7 +83,13 @@ app.post("/api/users/login", async (req, res) => {
     if (user) {
       const isMatch = await isPasswordValid(password, user.password); // Compare passwords directly
       if (isMatch) {
-        res.send(user);
+        // Generate JWT
+
+        const token = jwt.sign({ user }, JWT_SECRET, {
+          expiresIn: "1h", // Set the token expiration time as desired
+        });
+
+        res.json({ user, token }); // Send user data and token in response
       } else {
         res.status(401).send({ error: "Authentication failed" });
       }
@@ -282,6 +313,13 @@ app.get("/api/body_measurement/:id", (req, res) => {
       console.error("Error retrieving body measurements:", error);
       res.status(500).send("Internal Server Error");
     });
+});
+
+app.get("/api/protected", verifyToken, (req, res) => {
+  // Access the authenticated user's data from req.user
+  const userId = req.user.userId;
+  // ... (process the request)
+  res.send("Protected route response");
 });
 
 ///////////////////////////

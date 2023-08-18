@@ -12,6 +12,7 @@ function Login() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = (event) => {
+    localStorage.clear();
     event.preventDefault(event);
 
     axios
@@ -21,7 +22,9 @@ function Login() {
       })
       .then(function (response) {
         if (response.status === 200) {
-          auth.login(response.data);
+          auth.login(response.data.user);
+          const token = response.data.token;
+          localStorage.setItem("jwtToken", token);
           navigate("/home");
           clearUser();
         } else {

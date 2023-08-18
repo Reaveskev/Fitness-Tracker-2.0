@@ -53,6 +53,8 @@ function User() {
     SetValues({ ...uservalues, confirm_password: event.target.value });
   };
 
+  console.log(user);
+
   const handleSubmit = (event) => {
     //prevent referesh
     event.preventDefault();
@@ -155,7 +157,7 @@ function User() {
                   </span>
                   <span className="ageSpan">
                     Age
-                    <strong>{calculateAge(user.birth_date.slice(0, 9))}</strong>
+                    {/* <strong>{calculateAge(user.birth_date.slice(0, 9))}</strong> */}
                   </span>
                 </div>
               </div>
