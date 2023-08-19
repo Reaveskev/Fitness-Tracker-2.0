@@ -72,7 +72,7 @@ const FoodEntries = ({ foodEntries, setFoodEntries }) => {
     setSuccessMessage("");
     if (selectedDate) {
       axios
-        .get(`/api/food_diary/${selectedDate}`)
+        .get(`/api/food_diary/${selectedDate}/${user.user_id}`)
         .then((response) => {
           if (response.data.length > 0) {
             setExistingDiaryId(response.data[0].diary_id); // Set the existing diary_id

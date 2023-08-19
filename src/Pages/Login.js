@@ -22,9 +22,8 @@ function Login() {
       })
       .then(function (response) {
         if (response.status === 200) {
-          auth.login(response.data.user);
-          const token = response.data.token;
-          localStorage.setItem("jwtToken", token);
+          auth.login(response.data);
+
           navigate("/home");
           clearUser();
         } else {

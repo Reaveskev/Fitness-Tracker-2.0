@@ -1,25 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "./Auth";
-import jwt from "jsonwebtoken";
 
 export const RequireAuth = ({ children }) => {
   const { user, setUser } = useAuth();
-
-  useEffect(() => {
-    const token = localStorage.getItem("jwtToken");
-    const decodedToken = jwt.decode(token);
-
-    // Check if the page was refreshed
-    if (
-      window.performance.navigation.type === 1 &&
-      token &&
-      decodedToken &&
-      decodedToken.user
-    ) {
-      setUser(decodedToken.user);
-    }
-  }, []);
 
   if (!user) {
     return <Navigate to="/" />;
