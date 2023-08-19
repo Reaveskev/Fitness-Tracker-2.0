@@ -7,6 +7,7 @@
   border-radius: 5px;
   margin-left: 45px;
   box-shadow: -1px 5px 9px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .login-div {

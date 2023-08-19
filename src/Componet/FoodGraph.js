@@ -131,7 +131,7 @@ const FoodGraph = ({ setCaloriesAte }) => {
 
   useEffect(() => {
     const fetchFoodsForDate = () => {
-      fetch(`/api/food_diary/${formattedDate}`)
+      fetch(`/api/food_diary/${formattedDate}/${user.user_id}`)
         .then((response) => response.json())
         .then((data) => {
           let protein = 0;

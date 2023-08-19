@@ -15,6 +15,7 @@ function User() {
   const [weight, setWeight] = useState(false);
   const [image_url, setImage_url] = useState("");
   const [passwordError, setPasswordError] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [uservalues, SetValues] = useState({
     username: "",
     name: "",
@@ -53,8 +54,6 @@ function User() {
     SetValues({ ...uservalues, confirm_password: event.target.value });
   };
 
-  console.log(user);
-
   const handleSubmit = (event) => {
     //prevent referesh
     event.preventDefault();
@@ -79,6 +78,7 @@ function User() {
         const newWeight = Number(response.data.weight); // Convert to number
         const updatedUser = { ...user, weight: newWeight };
         setUser(updatedUser);
+        setSuccess(true);
       })
       .catch((error) => {
         // Handle any errors that might occur during the POST request
@@ -107,15 +107,21 @@ function User() {
         birth_date: uservalues.birth_date,
         image_url: image_url,
       })
-      .then((response) => setUser(response.data));
+      .then((response) => {
+        setUser(response.data);
+        setSuccess(true);
+      });
   };
   const updatePassword = () => {
     if (uservalues.password === uservalues.confirm_password) {
-      axios.patch(`/api/user/password`, {
-        user_id: user.user_id,
-        password: uservalues.password,
-      });
-      // .then((response) => console.log(response.data));
+      axios
+        .patch(`/api/user/password`, {
+          user_id: user.user_id,
+          password: uservalues.password,
+        })
+        .then((response) => {
+          setSuccess(true);
+        });
     } else {
       setPasswordError(true);
     }
@@ -200,6 +206,7 @@ function User() {
                 X
               </span>
               <h3>Update Information</h3>
+              {success && <span>Profile successly updated!</span>}
               <label className="userLabels">Name:</label>
               <input
                 onChange={handleNameInputChange}
@@ -255,6 +262,7 @@ function User() {
                 X
               </span>
               <h3>Update Password</h3>
+              {success && <span>Password successly updated!</span>}
               {passwordError ? <span>Passowrds do not match!</span> : null}
               <label className="userLabels">Password:</label>
               <input
@@ -294,6 +302,7 @@ function User() {
                 X
               </span>
               <h3>New Weight!</h3>
+              {success && <span>Current weigth updated!</span>}
               <label className="userLabels">Weight:</label>
               <input
                 onChange={handleWeightInputChange}
