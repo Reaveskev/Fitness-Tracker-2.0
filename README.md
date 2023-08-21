@@ -5,7 +5,7 @@ This is a recreation of my first complete React fullstack application. I decided
 
 ### Live view
 
-[![Webpage](/public/Fitness.png)]([https://fitness-tracker.onrender.com/](https://fitness-tracker-2-0.onrender.com/))
+[![Webpage](/public/Fitness.png)](https://fitness-tracker-2-0.onrender.com/)
 
 ### Video
 
