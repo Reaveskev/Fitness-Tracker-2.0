@@ -182,7 +182,7 @@ function GoalProgress({ userweight }) {
             <>
               {userweight[0] ? (
                 <div className="userweight-div">
-                  {userweight.lenght > 3 ? (
+                  {userweight.length > 3 ? (
                     <>
                       <SemiCircleProgress
                         percentage={progressPercentage}
