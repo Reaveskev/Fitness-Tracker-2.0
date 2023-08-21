@@ -33,3 +33,4 @@ This is a recreation of my first complete React fullstack application. I decided
 - PostgreSQL
 - Dropbox
 - Bcrypt
+- Multiple APIs
