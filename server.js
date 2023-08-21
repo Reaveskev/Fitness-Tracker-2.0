@@ -627,7 +627,6 @@ app.get("/api/exercises/", async (req, res) => {
     const response = await axios.get(externalApiUrl, { headers });
 
     // Process the response as needed
-    console.log(response);
     const exercises = response.data;
 
     // Return the data to the client

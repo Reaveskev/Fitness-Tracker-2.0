@@ -1,14 +1,26 @@
 # Fitness Tracker
 
-Fitness Tracker is a full-stack app that allows the user to track their recorded workouts in a journal, search for workouts that will displays a gif or image on how to perform workout and will generate a random motivational quote and track their recorded weights and display the change in a chart.
+Fitness Tracker is a full-stack app that allows the user to track their recorded workouts in a journal, record their recorded foods, generate a random motivational quote and see stastics on the home dashboard.
+
+This is a recreation of my first complete React fullstack application. I decided to go back and improve upon it as well as add some new features.
 
 ### Live view
 
-[![Webpage](/public/Fitness.png)](https://fitness-tracker.onrender.com/)
+[![Webpage](/public/HomeScreen.png)](https://fitness-tracker-2-0.onrender.com/)
 
-### What I learned
+### Preview
 
-For this being my first complete React fullstack application I am proud of how it functions and looks overall. There is still a lot of room for improvement. I am excited to keep learning and refining my skills.
+#### New
+
+![Gif 1](</public/Fitness_Tracker_2.0%20(1).gif>)
+
+![Gif 2](</public/Fitness_Tracker_2.0%20(2).gif>)
+
+![Gif 3](</public/Fitness_Tracker_2.0%20(3).gif>)
+
+#### Old
+
+![Gif 4](/public/Fitness_Tracker_1.0.gif)
 
 ## Built with
 
@@ -19,3 +31,5 @@ For this being my first complete React fullstack application I am proud of how i
 - JavaScript
 - Express
 - PostgreSQL
+- Dropbox
+- Bcrypt
