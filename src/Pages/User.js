@@ -163,7 +163,7 @@ function User() {
                   </span>
                   <span className="ageSpan">
                     Age
-                    {/* <strong>{calculateAge(user.birth_date.slice(0, 9))}</strong> */}
+                    <strong>{calculateAge(user.birth_date.slice(0, 9))}</strong>
                   </span>
                 </div>
               </div>

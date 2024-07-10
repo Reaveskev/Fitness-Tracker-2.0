@@ -5,24 +5,32 @@ import "../Styles/DropBox.css";
 const DropboxApp = ({ setImage_url, image_url }) => {
   const [uploading, setUploading] = useState(false);
   const [file, setFile] = useState(null);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
 
   async function handleUpload(event) {
     event.preventDefault();
     setUploading(true);
+    setUploadSuccess(false);
     const formData = new FormData();
     formData.append("file", file);
 
     let dropBox = "/api/dropbox/upload";
-    const response = await axios.post(dropBox, formData);
+    try {
+      const response = await axios.post(dropBox, formData);
 
-    const data = response.data;
+      const data = response.data;
 
-    let oldimage = data.url;
+      let oldimage = data.url;
 
-    const image = oldimage.replace("dl=0", "raw=1");
+      const image = oldimage.replace("dl=0", "raw=1");
 
-    if (image) {
-      setImage_url(image);
+      if (image) {
+        setImage_url(image);
+        setUploadSuccess(true); // Set upload success state
+      }
+    } catch (error) {
+      console.error("Upload failed:", error);
+    } finally {
       setUploading(false);
     }
   }
@@ -53,7 +61,7 @@ const DropboxApp = ({ setImage_url, image_url }) => {
           </div>
         )}
 
-        {image_url !== "" ? (
+        {uploadSuccess ? (
           <p style={{ color: "green" }}>Picture Uploaded successfully!</p>
         ) : (
           <>
