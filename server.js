@@ -623,8 +623,11 @@ app.get("/api/exercises/", async (req, res) => {
       "X-RapidAPI-Key": process.env.RAPID_API_KEY,
       "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
     };
+    const params = {
+      limit: 0,
+    };
 
-    const response = await axios.get(externalApiUrl, { headers });
+    const response = await axios.get(externalApiUrl, { params, headers });
 
     // Process the response as needed
     const exercises = response.data;
