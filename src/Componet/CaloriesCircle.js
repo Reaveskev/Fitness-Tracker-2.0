@@ -1,58 +1,47 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useAuth } from "../Componet/Auth";
+import "../Styles/CaloriesCircle.css";
 
 const CaloriesCircle = ({ caloriesAte }) => {
   const { user } = useAuth();
 
-  let calorieGoal = 2000;
-  useEffect(() => {
-    if (user.goal && user.goal.calorie_goal) {
-      calorieGoal = user.goal.calorie_goal;
-    }
-  }, [user]);
+  const calorieGoal =
+    user?.goal && user.goal.calorie_goal ? user.goal.calorie_goal : 2000;
 
-  const percentage = (caloriesAte / calorieGoal) * 100;
-
-  const circumference = 2 * Math.PI * 90;
+  const percentage = Math.min((caloriesAte / calorieGoal) * 100, 100);
+  const circumference = 2 * Math.PI * 70;
 
   return (
-    <div style={{ backgroundColor: "rgb(240, 240, 240)", borderRadius: 50 }}>
-      <svg width="200" height="200" className="calories-circle">
-        {/* Background circle */}
+    <div className="calorie-card">
+      <svg width="180" height="180" className="calories-circle">
         <circle
-          cx="100"
-          cy="100"
-          r="90"
+          cx="90"
+          cy="90"
+          r="70"
           fill="none"
-          stroke="#e0e0e0"
+          stroke="rgba(255,255,255,0.08)"
           strokeWidth="10"
         />
-        {/* Filled circle */}
         <circle
-          cx="100"
-          cy="100"
-          r="90"
+          cx="90"
+          cy="90"
+          r="70"
           fill="none"
-          stroke="#007bff"
+          stroke="#d4c08a"
           strokeWidth="10"
           strokeDasharray={circumference}
-          strokeDashoffset={
-            caloriesAte >= calorieGoal
-              ? 0 // Fill the circle completely if caloriesAte >= calorie goal
-              : (circumference * (100 - percentage)) / 100
-          }
+          strokeDashoffset={circumference - (circumference * percentage) / 100}
+          strokeLinecap="round"
+          transform="rotate(-90 90 90)"
         />
-        <text
-          x="100"
-          y="100"
-          textAnchor="middle"
-          dominantBaseline="middle"
-          fontSize="18"
-          color={caloriesAte > calorieGoal ? "red" : "black"}
-        >
-          {caloriesAte}/{calorieGoal} Calories
+        <text x="90" y="82" textAnchor="middle" className="calorie-number">
+          {caloriesAte}
+        </text>
+        <text x="90" y="108" textAnchor="middle" className="calorie-label">
+          / {calorieGoal}
         </text>
       </svg>
+      <p className="calorie-caption">Daily Calories</p>
     </div>
   );
 };

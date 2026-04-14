@@ -19,7 +19,7 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
 const FoodGraph = ({ setCaloriesAte }) => {
@@ -161,37 +161,57 @@ const FoodGraph = ({ setCaloriesAte }) => {
     datasets: [
       {
         label: "Actual Intake",
-        backgroundColor: "rgba(255, 99, 132, 0.6)",
-        borderColor: "rgba(255, 99, 132, 1)",
+        backgroundColor: "rgba(59, 130, 246, 0.55)",
+        borderColor: "#3b82f6",
         borderWidth: 1,
-        hoverBackgroundColor: "rgba(255, 99, 132, 0.8)",
-        hoverBorderColor: "rgba(255, 99, 132, 1)",
+        hoverBackgroundColor: "rgba(59, 130, 246, 0.75)",
+        hoverBorderColor: "#3b82f6",
         data: actualIntakeDataset,
       },
       {
         label: "Goal",
-        backgroundColor: "rgba(75, 192, 192, 0.6)",
-        borderColor: "rgba(75, 192, 192, 1)",
+        backgroundColor: "rgba(212, 192, 138, 0.55)",
+        borderColor: "#d4c08a",
         borderWidth: 1,
-        hoverBackgroundColor: "rgba(75, 192, 192, 0.8)",
-        hoverBorderColor: "rgba(75, 192, 192, 1)",
+        hoverBackgroundColor: "rgba(212, 192, 138, 0.75)",
+        hoverBorderColor: "#d4c08a",
         data: goalDataset,
       },
     ],
   };
 
   const options = {
+    responsive: true,
+    maintainAspectRatio: false,
     plugins: {
+      legend: {
+        labels: {
+          color: "#f8fafc",
+        },
+      },
       title: {
         display: true,
         text: "Macro Tracker",
+        color: "#f8fafc",
       },
     },
-    responsive: true,
-    maintainAspectRatio: false,
     scales: {
+      x: {
+        ticks: {
+          color: "#cbd5e1",
+        },
+        grid: {
+          color: "rgba(255,255,255,0.08)",
+        },
+      },
       y: {
-        beginAtZero: true, // Set to true to start the scale at 0
+        beginAtZero: true,
+        ticks: {
+          color: "#cbd5e1",
+        },
+        grid: {
+          color: "rgba(255,255,255,0.08)",
+        },
         max: (() => {
           const goalMax = Math.max(...goalDataset);
           const actualIntakeMax = Math.max(...actualIntakeDataset);
@@ -213,21 +233,21 @@ const FoodGraph = ({ setCaloriesAte }) => {
             datasets: [
               {
                 label: "Actual Intake",
-                backgroundColor: "rgba(255, 99, 132, 0.6)",
-                borderColor: "rgba(255, 99, 132, 1)",
+                backgroundColor: "rgba(59, 130, 246, 0.25)",
+                borderColor: "#3b82f6",
                 borderWidth: 1,
-                hoverBackgroundColor: "rgba(255, 99, 132, 0.8)",
-                hoverBorderColor: "rgba(255, 99, 132, 1)",
-                data: [0, 0, 0], // Empty data to show an empty graph
+                hoverBackgroundColor: "rgba(59, 130, 246, 0.4)",
+                hoverBorderColor: "#3b82f6",
+                data: [0, 0, 0],
               },
               {
                 label: "Goal",
-                backgroundColor: "rgba(75, 192, 192, 0.6)",
-                borderColor: "rgba(75, 192, 192, 1)",
+                backgroundColor: "rgba(212, 192, 138, 0.55)",
+                borderColor: "#d4c08a",
                 borderWidth: 1,
-                hoverBackgroundColor: "rgba(75, 192, 192, 0.8)",
-                hoverBorderColor: "rgba(75, 192, 192, 1)",
-                data: goalDataset, // Use the original goal dataset
+                hoverBackgroundColor: "rgba(212, 192, 138, 0.75)",
+                hoverBorderColor: "#d4c08a",
+                data: goalDataset,
               },
             ],
           }}

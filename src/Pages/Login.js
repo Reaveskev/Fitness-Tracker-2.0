@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import Kat from "../Componet/Picture/Kat.png";
+import Johnny from "../Componet/Picture/Johnny.JPG";
 import axios from "axios";
 import { useAuth } from "../Componet/Auth";
 import { useNavigate } from "react-router-dom";
 import "../Styles/Login.css";
+import logo from "../Componet/Picture/logo.png";
 
 function Login() {
   const auth = useAuth();
@@ -119,11 +120,15 @@ function Login() {
   return (
     <div className="login-container">
       {/* Hero picture */}
-      <img className={`hero-image hide-on-mobile`} src={Kat} />
+      <img className={`hero-image hide-on-mobile`} src={Johnny} />
       {/* If user doesnt click on create user show login */}
       {!showCreate ? (
         <>
           <div className="login-form">
+            <img src={logo} alt="Fitness Tracker logo" className="auth-logo" />
+            <p className="auth-subtitle">
+              Track workouts, meals, and progress in one place.
+            </p>
             <h2>Sign in here!</h2>
             {/* if username and password combination is inccorect show error message */}
             {errorMessage && (
@@ -137,6 +142,7 @@ function Login() {
                   name="username"
                   value={uservalues.username}
                   onChange={handleUserNameInputChange}
+                  className={errorMessage ? "input-error" : ""}
                   placeholder="Username"
                   required
                 />
@@ -145,6 +151,7 @@ function Login() {
                   placeholder="Password"
                   value={uservalues.password}
                   onChange={handlePasswordInputChange}
+                  className={errorMessage ? "input-error" : ""}
                   required
                 />
                 <button type="submit">Log in</button>
@@ -155,8 +162,7 @@ function Login() {
                   SetValues({ ...uservalues, password: "", username: "" });
                   setErrorMessage(false);
                 }}
-                className="createUser"
-                style={{ fontWeight: "bold", cursor: "pointer", fontSize: 10 }}
+                className="auth-switch"
               >
                 Create Account
               </span>
@@ -167,8 +173,9 @@ function Login() {
         // Create user form
         <>
           <div className="form-container">
+            <img src={logo} alt="Fitness Tracker logo" className="auth-logo" />
             <h2>Create an Account</h2>
-            <p style={{ fontSize: 10, textAlign: "center" }}>
+            <p className="auth-helper">
               *All fields are required inorder to proceed.
             </p>
             {/* if username already exist */}
@@ -184,6 +191,7 @@ function Login() {
                   value={uservalues.username}
                   onChange={handleUserNameInputChange}
                   placeholder="Username"
+                  className={errorMessage ? "input-error" : ""}
                   required
                 />
               </div>
@@ -195,6 +203,7 @@ function Login() {
                   value={uservalues.name}
                   onChange={handleNameInputChange}
                   placeholder="Name"
+                  className={errorMessage ? "input-error" : ""}
                   required
                 />
               </div>
@@ -205,6 +214,7 @@ function Login() {
                   name="weight"
                   value={uservalues.weight}
                   onChange={handleWeightInputChange}
+                  className={errorMessage ? "input-error" : ""}
                   placeholder="Weight"
                   required
                 />
@@ -216,14 +226,13 @@ function Login() {
                   name="sex"
                   value={uservalues.sex}
                   onChange={handleSexInputChange}
+                  className={errorMessage ? "input-error" : ""}
                   placeholder="Sex"
                   required
                 />
               </div>
-              <div
-                style={{ display: "flex", width: 167, flexDirection: "column" }}
-              >
-                <label for="birthdate" style={{ paddingLeft: 5, fontSize: 10 }}>
+              <div className="form-field">
+                <label htmlFor="birthdate" className="form-label">
                   Birth Date
                 </label>
                 <input
@@ -232,6 +241,7 @@ function Login() {
                   name="birthdate"
                   value={uservalues.birthdate}
                   onChange={handleBirthdateInputChange}
+                  className={errorMessage ? "input-error" : ""}
                   placeholder="birthdate"
                   required
                 />
@@ -243,21 +253,17 @@ function Login() {
                   name="password"
                   value={uservalues.password}
                   onChange={handlePasswordInputChange}
+                  className={errorMessage ? "input-error" : ""}
                   placeholder="Password"
                   required
                 />
               </div>
               <button type="submit">Create Account</button>
               <span
-                style={{
-                  margin: 5,
-                  fontWeight: "bold",
-                  cursor: "pointer",
-                  fontSize: 10,
-                }}
+                className="auth-switch"
                 onClick={() => {
                   setShowCreate(false);
-                  SetValues({ ...uservalues, password: "" });
+                  SetValues({ ...uservalues, password: "", username: "" });
                   setErrorMessage(false);
                 }}
                 type="submit"

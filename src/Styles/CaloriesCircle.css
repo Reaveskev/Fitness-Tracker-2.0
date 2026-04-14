@@ -1,0 +1,29 @@
+.calorie-card {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.calorie-number {
+  fill: var(--text);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.calorie-label {
+  fill: var(--muted);
+  font-size: 13px;
+}
+
+.calorie-caption {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 14px;
+}

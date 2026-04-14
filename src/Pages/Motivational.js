@@ -29,8 +29,7 @@ function Motivational() {
     <div className="motivation_container">
       {!showQuote ? (
         <span className="motivation_container_span">
-          Need a little push or burst of wisdom to get your focus back, or get
-          you motivated? We got you covered!
+          💡 Need a boost? Tap below for a random quote to get you going.
         </span>
       ) : (
         <div className="fullQuote">
@@ -45,19 +44,11 @@ function Motivational() {
 
       <div className="text-center my-3">
         {!showQuote ? (
-          <button
-            className="addWorkoutButton"
-            style={{ padding: 5, cursor: "pointer" }}
-            onClick={NextQuote}
-          >
+          <button className="quote-button" onClick={NextQuote}>
             Get quote
           </button>
         ) : (
-          <button
-            className="addWorkoutButton"
-            style={{ padding: 5, cursor: "pointer", marginTop: 30 }}
-            onClick={NextQuote}
-          >
+          <button className="quote-button" onClick={NextQuote}>
             Want another?
           </button>
         )}

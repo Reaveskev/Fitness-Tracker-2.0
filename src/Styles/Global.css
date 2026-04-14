@@ -1,0 +1,175 @@
+:root {
+  --bg: #0f172a;
+  --bg-alt: #111827;
+  --card: #1f2937;
+  --card-2: #273449;
+  --card-3: #334155;
+  --text: #f8fafc;
+  --muted: #cbd5e1;
+  --accent: #d4c08a;
+  --accent-2: #3b82f6;
+  --danger: #ef4444;
+  --success: #22c55e;
+  --border: rgba(255, 255, 255, 0.08);
+  --shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+  --radius: 18px;
+  --radius-sm: 10px;
+  --content-width: 1200px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #f5f7fb;
+  color: #0f172a;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.main {
+  min-height: 100vh;
+  color: var(--text);
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin-top: 0;
+}
+
+a {
+  color: inherit;
+}
+
+input,
+select,
+textarea {
+  background: var(--card-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--muted);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(212, 192, 138, 0.18);
+}
+
+button,
+.addWorkoutButton,
+.uploadButton,
+.submit-food-entries,
+.delete_food {
+  background: var(--accent-2);
+  color: var(--text);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  cursor: pointer;
+  font: inherit;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease,
+    background 0.2s ease;
+}
+
+button:hover,
+.addWorkoutButton:hover,
+.uploadButton:hover,
+.submit-food-entries:hover,
+.delete_food:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+button:disabled,
+.uploadButton:disabled {
+  background: #475569;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.app-card {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+
+.scroll-panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow-y: auto;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.page-shell {
+  width: min(100%, var(--content-width));
+  margin: 0 auto;
+  padding-top: 24px;
+  color: #0f172a;
+}
+
+@media (max-width: 768px) {
+  .page-shell {
+    padding: 16px 12px 32px;
+  }
+}
+
+.app-card,
+.user,
+.goal-progress,
+.graph,
+.motivation_container,
+.last30-container,
+.calorie-card {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.app-card:hover,
+.user:hover,
+.goal-progress:hover,
+.graph:hover,
+.motivation_container:hover,
+.last30-container:hover,
+.calorie-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+}

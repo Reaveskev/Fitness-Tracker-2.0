@@ -6,21 +6,27 @@
   align-content: center;
   justify-content: center;
   align-items: center;
-  height: 150px;
+  min-height: 120px;
+  max-height: 180px;
+  text-align: center;
 }
 
 .motivation_container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f0f0f0;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 50px;
-  margin: 20px;
-  min-width: 200px;
   justify-content: center;
-  height: 150px;
+  background: var(--card);
+  color: var(--text);
+  padding: 24px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  margin: 0;
+  min-width: 0;
+  min-height: 220px;
+  width: 100%;
+  gap: 10px;
 }
 
 .motivation_container_span {
@@ -28,12 +34,44 @@
   text-align: center;
 }
 
-.addWorkoutButton {
-  background-color: #007bff;
-  color: #fff;
+.quote {
+  font-size: 1.1rem;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInQuote 0.5s ease forwards;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.author {
+  margin-top: 10px;
+  opacity: 0;
+  animation: fadeInQuote 0.5s ease forwards;
+  animation-delay: 0.2s;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.quote-button {
+  background: var(--accent);
+  color: white;
   border: none;
-  padding: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-bottom: 6px;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  margin-top: 10px;
+}
+
+.quote-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeInQuote {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

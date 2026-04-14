@@ -19,12 +19,12 @@ function Sidebar() {
     <>
       <IconContext.Provider value={{ color: "#fff" }}>
         <div className="sidebar">
-          <div className="logoDiv">
-            <img src={logo} className="logo"></img>
+          <div className="leftHeaderGroup">
+            <Link to="#" className="menu-bars">
+              <FaIcons.FaBars onClick={showSidebar} />
+            </Link>
+            <img src={logo} className="logo" alt="Fitness Tracker" />
           </div>
-          <Link to="#" className="menu-bars">
-            <FaIcons.FaBars onClick={showSidebar} />
-          </Link>
         </div>
         <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
           <ul className="van-menu-items" onClick={showSidebar}>

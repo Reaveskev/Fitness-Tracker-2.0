@@ -168,7 +168,7 @@ app.delete("/api/users/:id", async (req, res) => {
   try {
     const result = await pool.query(
       "DELETE FROM users WHERE user_id = $1 RETURNING *",
-      [user_id]
+      [user_id],
     );
 
     if (result.rows.length === 0) {
@@ -195,7 +195,7 @@ app.patch("/api/users/:id", async (req, res) => {
       pool
         .query(
           `UPDATE users SET username = COALESCE($1, username), name = COALESCE($2, name), sex = COALESCE($3, sex), birth_date = COALESCE($4, birth_date), password = COALESCE($5, password), image_url = COALESCE($6, image_url) WHERE user_id = $7 RETURNING *`,
-          [username, name, sex, birth_date, hashedPassword, image_url, id]
+          [username, name, sex, birth_date, hashedPassword, image_url, id],
         )
         .then((result) => {
           if (result.rows.length === 0) {
@@ -213,7 +213,7 @@ app.patch("/api/users/:id", async (req, res) => {
     pool
       .query(
         `UPDATE users SET username = COALESCE($1, username), name = COALESCE($2, name), sex = COALESCE($3, sex), birth_date = COALESCE($4, birth_date), image_url = COALESCE($5, image_url) WHERE user_id = $6 RETURNING *`,
-        [username, name, sex, birth_date, image_url, id]
+        [username, name, sex, birth_date, image_url, id],
       )
       .then((result) => {
         if (result.rows.length === 0) {
@@ -232,7 +232,7 @@ app.patch("/api/user/password", (req, res) => {
   pool
     .query(
       "UPDATE users SET password = COALESCE($1, password) WHERE user_id = $2 ",
-      [hashedPassword, user_id] // Pass the array of values here
+      [hashedPassword, user_id], // Pass the array of values here
     )
     .then((result) => {
       if (result.rows.length === 0) {
@@ -252,7 +252,7 @@ app.post("/api/body_measurement", (req, res) => {
   pool
     .query(
       "INSERT INTO body_measurements(user_id, weight) VALUES($1, $2) RETURNING *",
-      [user_id, weight] // Pass the array of values here
+      [user_id, weight], // Pass the array of values here
     )
     .then((result) => {
       if (result.rows.length === 0) {
@@ -292,7 +292,7 @@ app.post("/api/goals", (req, res) => {
   pool
     .query(
       "INSERT INTO goals(user_id, goal, calorie_goal, goal_weight) VALUES($1, $2, $3, $4) RETURNING *",
-      [user_id, goal, calorieGoals, goalWeight]
+      [user_id, goal, calorieGoals, goalWeight],
     )
     .then((result) => {
       if (result.rows.length === 0) {
@@ -350,7 +350,7 @@ app.get("/api/past_workouts/:date/:user_id", (req, res) => {
   pool
     .query(
       "SELECT * FROM Workout_Entries WHERE workout_id IN (SELECT workout_id FROM Workout WHERE date = $1 AND user_id = $2)",
-      [date, user_id]
+      [date, user_id],
     )
     .then((data) => {
       const workout = data.rows;
@@ -380,7 +380,7 @@ app.get("/api/count_past_workouts/", (req, res) => {
   pool
     .query(
       "SELECT COUNT(*) AS workout_count FROM Workout WHERE date BETWEEN $1 AND $2 AND user_id = $3",
-      [thirtyDaysAgo, currentDate, user_id]
+      [thirtyDaysAgo, currentDate, user_id],
     )
     .then((data) => {
       const workoutCount = data.rows[0].workout_count;
@@ -413,7 +413,7 @@ app.patch("/api/workout_entry/:entry_id", (req, res) => {
   pool
     .query(
       "UPDATE workout_entries SET exercise_id = $1, set_count = $2, rep_count = $3, weight = $4, weight_unit = $5 WHERE entry_id = $6 RETURNING *;",
-      [exercise_id, set_count, rep_count, weight, weight_unit, entry_id]
+      [exercise_id, set_count, rep_count, weight, weight_unit, entry_id],
     )
     .then((result) => {
       if (result.rows.length === 0) {
@@ -456,7 +456,7 @@ app.post("/api/workouts_entry", (req, res) => {
     // Create a promise for each workout entry insertion
     const insertionPromise = pool.query(
       "INSERT INTO workout_entries(workout_id, exercise_id, set_count, rep_count, weight, weight_unit) VALUES($1, $2, $3, $4, $5, $6) RETURNING *;",
-      [workout_id, exercise_id, set_count, rep_count, weight, weight_unit]
+      [workout_id, exercise_id, set_count, rep_count, weight, weight_unit],
     );
 
     // Add the promise to the array
@@ -487,7 +487,7 @@ app.post("/api/food_diary", (req, res) => {
   pool
     .query(
       "INSERT INTO food_diary(user_id, date) VALUES($1, $2) RETURNING *;",
-      [user_id, date]
+      [user_id, date],
     )
     .then((data) => {
       res.status(200).json(data.rows[0]); // Use json() to send the response as JSON
@@ -506,7 +506,7 @@ app.get("/api/food_diary/:id/:user", (req, res) => {
   pool
     .query(
       "SELECT * FROM food_entries WHERE diary_id IN (SELECT diary_id FROM food_diary WHERE date = $1 AND user_id = $2)",
-      [date, user_id]
+      [date, user_id],
     )
     .then((data) => {
       const food_diary = data.rows;
@@ -591,7 +591,7 @@ app.post("/api/food_entries", (req, res) => {
         fat,
         carbohydrate,
         fiber,
-      ]
+      ],
     );
 
     // Add the promise to the array

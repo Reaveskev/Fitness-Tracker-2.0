@@ -34,3 +34,16 @@ This is a recreation of my first complete React fullstack application. I decided
 - Dropbox
 - Bcrypt
 - Multiple APIs
+
+  To Do
+  Dark theme
+  Create card system
+  Adjust Layout
+  Redo Login
+  Remove fixed Widths
+  Improve Food Search and Food Journal
+  Simplify Workout Journal UI
+  Upgrade Graphin Styling
+  Improve Sidebar UX
+  Clean up Repeated CSS
+  Improve State Management
