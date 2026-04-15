@@ -6,68 +6,104 @@
 
 .food-entries {
   width: 100%;
-  max-width: 440px;
-  margin-left: 0;
   background: var(--card);
   color: var(--text);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 20px;
+  min-height: 540px;
+  display: flex;
+  flex-direction: column;
 }
 
-.food-entries h3,
-.food-entries h4 {
-  margin-bottom: 10px;
+.entries-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 12px;
 }
 
-.food-entries ul {
-  margin: 0 0 20px;
+.entries-header h3 {
+  margin: 0;
+}
+
+.meals-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.meal-section h4 {
+  margin: 0 0 6px;
+}
+
+.meal-section ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
-.food-entries li {
+.meal-section li {
   margin-bottom: 8px;
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  background: var(--card-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
 }
 
-.food-entries li:hover .additional-info {
-  display: block;
+.empty-meal {
+  color: var(--muted);
+  font-size: 0.85rem;
+  opacity: 0.8;
+  margin: 0;
+}
+
+.food-entry-main {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+}
+
+.food-entry-name {
+  font-weight: 600;
+}
+
+.food-entry-cal {
+  color: var(--muted);
+  white-space: nowrap;
 }
 
 .bin {
   cursor: pointer;
   padding-left: 8px;
-}
-
-.successMessageFood {
-  color: var(--success);
-  margin-top: 1rem;
-  text-align: center;
-}
-
-.failureMessageFood {
-  color: var(--danger);
-  margin-top: 1rem;
-  text-align: center;
+  flex-shrink: 0;
 }
 
 .additional-info {
   display: none;
   position: absolute;
-  top: 100%;
+  top: calc(100% + 6px);
   left: 0;
-  width: 180px;
+  width: 210px;
   background: var(--card-2);
   color: var(--text);
-  padding: 8px;
+  padding: 10px;
   border: 1px solid var(--border);
   border-radius: 10px;
   box-shadow: var(--shadow);
   z-index: 10;
+}
+
+.meal-section li:hover .additional-info {
+  display: block;
 }
 
 .additional-info span {
@@ -75,8 +111,52 @@
   margin-bottom: 4px;
 }
 
+.calorie-summary {
+  text-align: center;
+  margin: 16px 0;
+  font-weight: 600;
+}
+
+.calorie-summary .over {
+  color: var(--danger);
+}
+
+.entries-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.entries-actions .danger {
+  background: #ef4444;
+}
+
+.message {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.message.success {
+  color: var(--success);
+}
+
+.message.error {
+  color: var(--danger);
+}
+
+.message.info {
+  color: var(--muted);
+}
+
+.pie-chart-container {
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
 @media (max-width: 768px) {
-  .food-entries {
-    max-width: none;
+  .meals-grid {
+    grid-template-columns: 1fr;
   }
 }

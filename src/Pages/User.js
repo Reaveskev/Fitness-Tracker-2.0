@@ -9,55 +9,29 @@ import "../Styles/User.css";
 
 function User() {
   const { user, setUser } = useAuth();
-  const [users, setUsers] = useState([]);
-  const [update, setUpdate] = useState(false);
-  const [password, setPassword] = useState(false);
-  const [weight, setWeight] = useState(false);
+
+  const [mode, setMode] = useState("view");
   const [image_url, setImage_url] = useState("");
   const [passwordError, setPasswordError] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [uservalues, SetValues] = useState({
+  const [successMessage, setSuccessMessage] = useState("");
+
+  const [uservalues, setValues] = useState({
     username: "",
     name: "",
     sex: "",
     birth_date: "",
     password: "",
     confirm_password: "",
-    weight: 0,
+    weight: "",
   });
 
-  const handleUserNameInputChange = (event) => {
-    SetValues({ ...uservalues, username: event.target.value });
+  const resetMessages = () => {
+    setPasswordError(false);
+    setSuccessMessage("");
   };
 
-  const handleNameInputChange = (event) => {
-    SetValues({ ...uservalues, name: event.target.value });
-  };
-
-  const handleWeightInputChange = (event) => {
-    SetValues({ ...uservalues, weight: Number(event.target.value) });
-  };
-
-  const handleSexInputChange = (event) => {
-    SetValues({ ...uservalues, sex: event.target.value });
-  };
-
-  const handleBirthDateInputChange = (event) => {
-    SetValues({ ...uservalues, birth_date: event.target.value });
-  };
-
-  const handlePasswordInputChange = (event) => {
-    SetValues({ ...uservalues, password: event.target.value });
-  };
-
-  const handleConfirmPasswordInputChange = (event) => {
-    SetValues({ ...uservalues, confirm_password: event.target.value });
-  };
-
-  const handleSubmit = (event) => {
-    //prevent referesh
-    event.preventDefault();
-    SetValues({
+  const resetForm = () => {
+    setValues({
       username: "",
       name: "",
       sex: "",
@@ -68,263 +42,331 @@ function User() {
     });
   };
 
-  const addNewWeight = () => {
-    axios
-      .post("/api/body_measurement", {
+  const switchMode = (nextMode) => {
+    resetMessages();
+    resetForm();
+    setMode(nextMode);
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    resetMessages();
+    setValues((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+
+  const addNewWeight = async () => {
+    try {
+      const response = await axios.post("/api/body_measurement", {
         user_id: user.user_id,
-        weight: uservalues.weight,
-      })
-      .then((response) => {
-        const newWeight = Number(response.data.weight); // Convert to number
-        const updatedUser = { ...user, weight: newWeight };
-        setUser(updatedUser);
-        setSuccess(true);
-      })
-      .catch((error) => {
-        // Handle any errors that might occur during the POST request
-        console.error("Error adding new weight:", error);
+        weight: Number(uservalues.weight),
       });
-  };
 
-  const updateUserInfo = () => {
-    if (image_url === "") {
-      // If there's a new image_url, update it in the user state
-      setImage_url(user.image_url);
+      const newWeight = Number(response.data.weight);
+      const updatedUser = { ...user, weight: newWeight };
+      setUser(updatedUser);
+      setSuccessMessage("Weight updated successfully.");
+      resetForm();
+    } catch (error) {
+      console.error("Error adding new weight:", error);
     }
-
-    // Update uservalues with default values if they're empty
-    uservalues.name = uservalues.name || users.name;
-    uservalues.sex = uservalues.sex || users.sex;
-    uservalues.birth_date = uservalues.birth_date || users.birth_date;
-    uservalues.username = uservalues.username || users.username;
-
-    // Make a PATCH request to update user information on the server
-    axios
-      .patch(`/api/users/${user.user_id}`, {
-        username: uservalues.username,
-        name: uservalues.name,
-        sex: uservalues.sex,
-        birth_date: uservalues.birth_date,
-        image_url: image_url,
-      })
-      .then((response) => {
-        setUser(response.data);
-        setSuccess(true);
-      });
   };
-  const updatePassword = () => {
-    if (uservalues.password === uservalues.confirm_password) {
-      axios
-        .patch(`/api/user/password`, {
-          user_id: user.user_id,
-          password: uservalues.password,
-        })
-        .then((response) => {
-          setSuccess(true);
-        });
-    } else {
+
+  const updateUserInfo = async () => {
+    try {
+      const payload = {
+        username: uservalues.username || user.username,
+        name: uservalues.name || user.name,
+        sex: uservalues.sex || user.sex,
+        birth_date: uservalues.birth_date || user.birth_date,
+        image_url: image_url || user.image_url,
+      };
+
+      const response = await axios.patch(`/api/users/${user.user_id}`, payload);
+      setUser(response.data);
+      setSuccessMessage("Profile updated successfully.");
+      resetForm();
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
+  };
+
+  const updatePassword = async () => {
+    if (uservalues.password !== uservalues.confirm_password) {
       setPasswordError(true);
+      return;
+    }
+
+    try {
+      await axios.patch(`/api/user/password`, {
+        user_id: user.user_id,
+        password: uservalues.password,
+      });
+
+      setSuccessMessage("Password updated successfully.");
+      resetForm();
+      setPasswordError(false);
+    } catch (error) {
+      console.error("Error updating password:", error);
     }
   };
 
-  function calculateAge(birthdate) {
+  const calculateAge = (birthdate) => {
     const birthDateObj = new Date(birthdate);
     const currentDate = new Date();
 
-    // Get the difference in milliseconds between the current date and birthdate
     let ageInMillis = currentDate - birthDateObj;
-
-    // Convert milliseconds to years
     const millisecondsInYear = 1000 * 60 * 60 * 24 * 365.25;
     let ageInYears = ageInMillis / millisecondsInYear;
 
-    // Round down to get the integer age
-    ageInYears = Math.floor(ageInYears);
+    return Math.floor(ageInYears);
+  };
 
-    return ageInYears;
-  }
+  const renderProfileView = () => {
+    return (
+      <div className="userCard">
+        <div className="userTop">
+          <img
+            className="userImg"
+            src={user.image_url || "/default_image.png"}
+            alt="user profile"
+          />
 
-  return (
-    <div className="user">
-      <div className="user-div">
-        {!weight && !password && !update ? (
-          <div className="userAlign">
-            <img
-              className="userImg"
-              src={user.image_url || "/default_image.png"}
-              alt="user image"
-            />
-            <div className="userUltraAlign">
-              <div className="userUltraAlign">
-                <span style={{ fontWeight: "bold" }}>{user.name}</span>
-                <div className="userInfoDiv">
-                  <span className="weightSpan">
-                    Weight <strong>{user.weight} </strong>
-                  </span>
-                  <span className="ageSpan">
-                    Age
-                    <strong>{calculateAge(user.birth_date.slice(0, 9))}</strong>
-                  </span>
-                </div>
+          <div className="userIdentity">
+            <h3 className="userName">{user.name || user.username}</h3>
+            <p className="userSubtext">@{user.username}</p>
+
+            <div className="userStats">
+              <div className="userStat">
+                <span className="userStatLabel">Weight</span>
+                <span className="userStatValue">{user.weight} lbs</span>
               </div>
-              <div className="iconDiv">
-                <div className="ageSpan">
-                  <BiIcons.BiEditAlt
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      setUpdate(true);
-                    }}
-                  />
-                  <span className="iconText"> Edit Information</span>
-                </div>
-                <div className="weightIconDiv">
-                  <FaIcons.FaWeight
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      setWeight(true);
-                    }}
-                  />
-                  <span className="iconText"> Add new Weight </span>
-                </div>
-                <div className="ageSpan">
-                  <RiIcons.RiLockPasswordFill
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      setPassword(true);
-                    }}
-                  />
-                  <span className="iconText"> Change Password </span>
-                </div>
+
+              <div className="userStat">
+                <span className="userStatLabel">Age</span>
+                <span className="userStatValue">
+                  {calculateAge(user.birth_date.slice(0, 10))}
+                </span>
               </div>
             </div>
           </div>
-        ) : null}
-        {update && (
-          <form className="userDiv" onSubmit={handleSubmit}>
-            <div className="userInfo">
-              <span className="exitSpan" onClick={() => setUpdate(false)}>
-                X
-              </span>
-              <h3>Update Information</h3>
-              {success && <span>Profile successly updated!</span>}
-              <label className="userLabels">Name:</label>
-              <input
-                onChange={handleNameInputChange}
-                value={uservalues.name}
-                className="name-span"
-                type="text"
-                placeholder="Name"
-                name="name"
-              />
-              <label className="userLabels">Username:</label>
-              <input
-                onChange={handleUserNameInputChange}
-                value={uservalues.username}
-                className="username-span"
-                type="text"
-                placeholder="Username"
-                name="username"
-              />
-              <label className="userLabels">Sex: </label>
-              <input
-                onChange={handleSexInputChange}
-                value={uservalues.sex}
-                className="sex-span"
-                type="text"
-                placeholder="Sex"
-                name="sex"
-              />
-              <label className="userLabels">Birth Date:</label>
-              <input
-                onChange={handleBirthDateInputChange}
-                value={uservalues.birth_date}
-                className="birthdate-span"
-                type="date"
-                placeholder="Birth Date"
-                name="birthdate"
-              />
-              <DropboxApp image_url={image_url} setImage_url={setImage_url} />
-              <button
-                onClick={() => updateUserInfo()}
-                className="addWorkoutButton"
-                type="submit"
-              >
-                Update User
-              </button>
-            </div>
-          </form>
-        )}
+        </div>
 
-        {password && (
-          <form className="userDiv" onSubmit={handleSubmit}>
-            <div className="userInfo">
-              <span className="exitSpan" onClick={() => setPassword(false)}>
-                X
-              </span>
-              <h3>Update Password</h3>
-              {success && <span>Password successly updated!</span>}
-              {passwordError ? <span>Passowrds do not match!</span> : null}
-              <label className="userLabels">Password:</label>
-              <input
-                onChange={handlePasswordInputChange}
-                value={uservalues.password}
-                className="password-span"
-                type="password"
-                placeholder="Password"
-                name="password"
-                required
-              />
-              <label className="userLabels">Confirm Password: </label>
-              <input
-                onChange={handleConfirmPasswordInputChange}
-                value={uservalues.confirm_password}
-                className="password-span2"
-                type="password"
-                placeholder="Confirm Password"
-                name="password2"
-                required
-              />
-              <button
-                onClick={() => updatePassword()}
-                className="addWorkoutButton"
-                type="submit"
-              >
-                Change Password
-              </button>
-            </div>
-          </form>
-        )}
+        <div className="userActions">
+          <button
+            type="button"
+            className="userActionBtn"
+            onClick={() => switchMode("edit")}
+          >
+            <BiIcons.BiEditAlt />
+            <span>Edit Info</span>
+          </button>
 
-        {weight && (
-          <form className="userDiv" onSubmit={handleSubmit}>
-            <div className="userInfo">
-              <span className="exitSpan" onClick={() => setWeight(false)}>
-                X
-              </span>
-              <h3>New Weight!</h3>
-              {success && <span>Current weigth updated!</span>}
-              <label className="userLabels">Weight:</label>
-              <input
-                onChange={handleWeightInputChange}
-                value={uservalues.weight}
-                className="weight-span"
-                type="number"
-                placeholder="Weight"
-                name="weight"
-                required
-              />
+          <button
+            type="button"
+            className="userActionBtn"
+            onClick={() => switchMode("weight")}
+          >
+            <FaIcons.FaWeight />
+            <span>Add Weight</span>
+          </button>
 
-              <button
-                onClick={() => addNewWeight()}
-                className="addWorkoutButton"
-                type="submit"
-              >
-                Add new weight
-              </button>
-            </div>
-          </form>
-        )}
+          <button
+            type="button"
+            className="userActionBtn"
+            onClick={() => switchMode("password")}
+          >
+            <RiIcons.RiLockPasswordFill />
+            <span>Password</span>
+          </button>
+        </div>
       </div>
+    );
+  };
+
+  const renderEditForm = () => {
+    return (
+      <form className="userPanel" onSubmit={handleSubmit}>
+        <div className="userPanelHeader">
+          <h3>Edit Profile</h3>
+          <button
+            type="button"
+            className="panelCloseBtn"
+            onClick={() => switchMode("view")}
+          >
+            Close
+          </button>
+        </div>
+
+        {successMessage ? (
+          <span className="userSuccess">{successMessage}</span>
+        ) : null}
+
+        <div className="userField">
+          <label>Name</label>
+          <input
+            onChange={handleChange}
+            value={uservalues.name}
+            type="text"
+            placeholder={user.name || "Name"}
+            name="name"
+          />
+        </div>
+
+        <div className="userField">
+          <label>Username</label>
+          <input
+            onChange={handleChange}
+            value={uservalues.username}
+            type="text"
+            placeholder={user.username || "Username"}
+            name="username"
+          />
+        </div>
+
+        <div className="userField">
+          <label>Sex</label>
+          <input
+            onChange={handleChange}
+            value={uservalues.sex}
+            type="text"
+            placeholder={user.sex || "Sex"}
+            name="sex"
+          />
+        </div>
+
+        <div className="userField">
+          <label>Birth Date</label>
+          <input
+            onChange={handleChange}
+            value={uservalues.birth_date}
+            type="date"
+            name="birth_date"
+          />
+        </div>
+
+        <div className="userField">
+          <label>Profile Image</label>
+          <DropboxApp image_url={image_url} setImage_url={setImage_url} />
+        </div>
+
+        <button
+          type="button"
+          className="userPrimaryBtn"
+          onClick={updateUserInfo}
+        >
+          Save Changes
+        </button>
+      </form>
+    );
+  };
+
+  const renderPasswordForm = () => {
+    return (
+      <form className="userPanel" onSubmit={handleSubmit}>
+        <div className="userPanelHeader">
+          <h3>Change Password</h3>
+          <button
+            type="button"
+            className="panelCloseBtn"
+            onClick={() => switchMode("view")}
+          >
+            Close
+          </button>
+        </div>
+
+        {successMessage ? (
+          <span className="userSuccess">{successMessage}</span>
+        ) : null}
+
+        {passwordError ? (
+          <span className="userError">Passwords do not match.</span>
+        ) : null}
+
+        <div className="userField">
+          <label>New Password</label>
+          <input
+            onChange={handleChange}
+            value={uservalues.password}
+            type="password"
+            placeholder="Password"
+            name="password"
+            required
+          />
+        </div>
+
+        <div className="userField">
+          <label>Confirm Password</label>
+          <input
+            onChange={handleChange}
+            value={uservalues.confirm_password}
+            type="password"
+            placeholder="Confirm Password"
+            name="confirm_password"
+            required
+          />
+        </div>
+
+        <button
+          type="button"
+          className="userPrimaryBtn"
+          onClick={updatePassword}
+        >
+          Update Password
+        </button>
+      </form>
+    );
+  };
+
+  const renderWeightForm = () => {
+    return (
+      <form className="userPanel" onSubmit={handleSubmit}>
+        <div className="userPanelHeader">
+          <h3>Log New Weight</h3>
+          <button
+            type="button"
+            className="panelCloseBtn"
+            onClick={() => switchMode("view")}
+          >
+            Close
+          </button>
+        </div>
+
+        {successMessage ? (
+          <span className="userSuccess">{successMessage}</span>
+        ) : null}
+
+        <div className="userField">
+          <label>Weight</label>
+          <input
+            onChange={handleChange}
+            value={uservalues.weight}
+            type="number"
+            placeholder="Weight"
+            name="weight"
+            required
+          />
+        </div>
+
+        <button type="button" className="userPrimaryBtn" onClick={addNewWeight}>
+          Save Weight
+        </button>
+      </form>
+    );
+  };
+
+  return (
+    <div className="user">
+      {mode === "view" && renderProfileView()}
+      {mode === "edit" && renderEditForm()}
+      {mode === "password" && renderPasswordForm()}
+      {mode === "weight" && renderWeightForm()}
     </div>
   );
 }

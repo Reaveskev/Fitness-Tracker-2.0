@@ -1,8 +1,8 @@
 # Fitness Tracker
 
-Fitness Tracker is a full-stack app that allows the user to track their recorded workouts in a journal, record their recorded foods, generate a random motivational quote and see stastics on the home dashboard.
+Fitness Tracker is a full-stack web application that allows users to track workouts, log meals, and visualize fitness progress through an interactive dashboard.
 
-This is a recreation of my first complete React fullstack application. I decided to go back and improve upon it as well as add some new features.
+This project is a complete rebuild of my original full-stack React application, focused on improving UI/UX, state management, and overall application structure.
 
 ### Live view
 
@@ -10,7 +10,7 @@ This is a recreation of my first complete React fullstack application. I decided
 
 ### Preview
 
-#### New
+#### v3.0 (current)
 
 ![Gif 1](</public/Fitness_Tracker_2.0%20(1).gif>)
 
@@ -18,9 +18,26 @@ This is a recreation of my first complete React fullstack application. I decided
 
 ![Gif 3](</public/Fitness_Tracker_2.0%20(3).gif>)
 
-#### Old
+#### v2.0 (Previous)
 
 ![Gif 4](/public/Fitness_Tracker_1.0.gif)
+
+## Features
+
+- 🏋️ Workout Journal – build and track workouts with sets, reps, and weights
+- 🍽 Food Diary – log meals and track daily calorie intake
+- 📊 Dashboard – visualize workouts, calories, and progress with charts
+- 🔐 Authentication – secure login and user-specific data
+- 💡 Motivational Quotes – fetch and display dynamic quotes
+
+## Improvements from Version 2
+
+- Refactored component structure for better scalability
+- Rebuilt UI with a consistent design system
+- Improved state management across pages
+- Enhanced responsiveness for mobile and tablet
+- Added data visualizations using Chart.js
+- Cleaned up inline styles and centralized CSS
 
 ## Built with
 
@@ -35,15 +52,16 @@ This is a recreation of my first complete React fullstack application. I decided
 - Bcrypt
 - Multiple APIs
 
-  To Do
-  Dark theme
-  Create card system
-  Adjust Layout
-  Redo Login
-  Remove fixed Widths
-  Improve Food Search and Food Journal
-  Simplify Workout Journal UI
-  Upgrade Graphin Styling
-  Improve Sidebar UX
-  Clean up Repeated CSS
-  Improve State Management
+## Getting Started
+
+### Frontend
+
+cd client
+npm install
+npm start
+
+### Backend
+
+cd server
+npm install
+npm run dev
